@@ -32,9 +32,9 @@ enum DiscType: String, CaseIterable, Codable {
     var description: String {
         switch self {
         case .normal:    return "普通の駒"
-        case .butter:    return "相手の色で置かれ、裏返されない"
-        case .cat:       return "自分の色で置かれ、裏返されない"
-        case .butterCat: return "挟めず、裏返されもしない"
+        case .butter:    return "相手の色になる。裏返しても元に戻る"
+        case .cat:       return "自分の色になる。裏返しても元に戻る"
+        case .butterCat: return "どちらの色でもない。挟んでも裏返せない"
         }
     }
 }

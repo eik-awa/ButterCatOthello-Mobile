@@ -29,6 +29,7 @@
 		BC0000000000000000000053 /* HandDiscView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0000000000000000000023 /* HandDiscView.swift */; };
 		BC0000000000000000000054 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BC0000000000000000000024 /* Assets.xcassets */; };
 		BC0000000000000000000055 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0000000000000000000026 /* AppTheme.swift */; };
+		C24F7FDA2F7BF59F00CDD408 /* ExternalPurchaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24F7FD92F7BF59F00CDD408 /* ExternalPurchaseManager.swift */; };
 		C2ED028B2F6BEE7400C01286 /* meow.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C2ED02892F6BEE7400C01286 /* meow.mp3 */; };
 		C2ED028C2F6BEE7400C01286 /* theme.wav in Resources */ = {isa = PBXBuildFile; fileRef = C2ED028A2F6BEE7400C01286 /* theme.wav */; };
 		C2ED028E2F6BEF0B00C01286 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2ED028D2F6BEF0B00C01286 /* AudioManager.swift */; };
@@ -61,6 +62,8 @@
 		BC0000000000000000000024 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BC0000000000000000000025 /* ButterCatOthello Mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ButterCatOthello Mobile.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC0000000000000000000026 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
+		C24F7FD82F7BF59200CDD408 /* ButterCatOthello Mobile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "ButterCatOthello Mobile.entitlements"; sourceTree = "<group>"; };
+		C24F7FD92F7BF59F00CDD408 /* ExternalPurchaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalPurchaseManager.swift; sourceTree = "<group>"; };
 		C2ED02892F6BEE7400C01286 /* meow.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = meow.mp3; sourceTree = "<group>"; };
 		C2ED028A2F6BEE7400C01286 /* theme.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = theme.wav; sourceTree = "<group>"; };
 		C2ED028D2F6BEF0B00C01286 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
@@ -92,6 +95,8 @@
 				C2ED028D2F6BEF0B00C01286 /* AudioManager.swift */,
 				C2ED028F2F6BF24600C01286 /* AdMobManager.swift */,
 				C2ED02962F6BF65A00C01286 /* Info.plist */,
+				C24F7FD82F7BF59200CDD408 /* ButterCatOthello Mobile.entitlements */,
+				C24F7FD92F7BF59F00CDD408 /* ExternalPurchaseManager.swift */,
 			);
 			path = "ButterCatOthello Mobile";
 			sourceTree = "<group>";
@@ -259,6 +264,7 @@
 				BC0000000000000000000050 /* CellView.swift in Sources */,
 				BC0000000000000000000051 /* DiscView.swift in Sources */,
 				BC0000000000000000000052 /* BottomDiscBar.swift in Sources */,
+				C24F7FDA2F7BF59F00CDD408 /* ExternalPurchaseManager.swift in Sources */,
 				BC0000000000000000000053 /* HandDiscView.swift in Sources */,
 				C2ED02902F6BF24600C01286 /* AdMobManager.swift in Sources */,
 				C2ED028E2F6BEF0B00C01286 /* AudioManager.swift in Sources */,

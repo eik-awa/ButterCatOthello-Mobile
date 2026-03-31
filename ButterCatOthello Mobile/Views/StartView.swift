@@ -215,18 +215,24 @@ private struct ModeButton: View {
 
 // MARK: - Special disc legend
 private struct SpecialDiscLegend: View {
-    struct DiscInfo { let image: String; let title: String; let desc: String; let bg: Color; let border: Color }
+    struct DiscInfo { let image: String; let title: String; let lines: [String]; let bg: Color; let border: Color }
     let items = [
-        DiscInfo(image: "butter",    title: "バター駒",
-                 desc: "置いた瞬間、なぜか相手の味方をする。",
+        DiscInfo(image: "butter",    title: "バター（トースト・小倉）",
+                 lines: ["置くと相手の色になる",
+                          "挟まれた相手の駒は裏返す",
+                          "裏返しても360°回転して元に戻る"],
                  bg: Color(red: 1.0, green: 0.97, blue: 0.87),
                  border: Color(red: 1.0, green: 0.85, blue: 0.4)),
-        DiscInfo(image: "cat",       title: "猫駒",
-                 desc: "自分色に染まってしまう。この猫の自由意志を誰も裏返すことはできない。",
+        DiscInfo(image: "cat",       title: "猫（白・黒）",
+                 lines: ["置くと自分の色になる",
+                          "自分の色で挟んでも駒を返せない",
+                          "裏返しても360°回転して元に戻る"],
                  bg: Color(red: 0.92, green: 0.98, blue: 0.94),
                  border: Color(red: 0.3, green: 0.8, blue: 0.5)),
-        DiscInfo(image: "buttercat", title: "バター猫駒",
-                 desc: "挟めず・裏返されもしない。永遠に回る未解決問題。",
+        DiscInfo(image: "buttercat", title: "バター猫（共通）",
+                 lines: ["置くとY軸回転し続ける",
+                          "相手でも自分でもない色扱い",
+                          "バター猫駒を挟んで駒を裏返せない"],
                  bg: Color(red: 1.0, green: 0.95, blue: 0.88),
                  border: Color(red: 1.0, green: 0.7, blue: 0.3)),
     ]
@@ -238,23 +244,28 @@ private struct SpecialDiscLegend: View {
                 .foregroundColor(AppTheme.textDark)
 
             ForEach(items, id: \.title) { item in
-                HStack(spacing: 12) {
+                HStack(alignment: .top, spacing: 12) {
                     Image(item.image)
                         .resizable()
                         .scaledToFit()
                         .frame(width: 36, height: 36)
-                    VStack(alignment: .leading, spacing: 1) {
+                        .padding(.top, 2)
+                    VStack(alignment: .leading, spacing: 3) {
                         Text(item.title)
                             .font(.system(size: 13, weight: .bold))
                             .foregroundColor(AppTheme.textDark)
-                        Text(item.desc)
-                            .font(.system(size: 11, weight: .medium))
-                            .foregroundColor(AppTheme.textMid)
+                        VStack(alignment: .leading, spacing: 1) {
+                            ForEach(item.lines, id: \.self) { line in
+                                Text("・\(line)")
+                                    .font(.system(size: 11, weight: .medium))
+                                    .foregroundColor(AppTheme.textMid)
+                            }
+                        }
                     }
                     Spacer()
                 }
                 .padding(.horizontal, 12)
-                .padding(.vertical, 8)
+                .padding(.vertical, 10)
                 .background(
                     RoundedRectangle(cornerRadius: 12)
                         .fill(item.bg)

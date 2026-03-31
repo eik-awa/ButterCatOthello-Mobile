@@ -2,11 +2,7 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>GADApplicationIdentifier</key>
-	<string>ca-app-pub-1615601076718034~3800270160</string>
-	<key>SKExternalPurchase</key>
-	<array>
-		<string>KR</string>
-	</array>
+	<key>com.apple.developer.storekit.external-purchase</key>
+	<true/>
 </dict>
 </plist>
