@@ -4,6 +4,8 @@
 <dict>
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-1615601076718034~3800270160</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>SKExternalPurchase</key>
 	<array>
 		<string>KR</string>

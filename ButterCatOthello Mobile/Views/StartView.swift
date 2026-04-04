@@ -1,8 +1,12 @@
 import SwiftUI
+import StoreKit
 
 struct StartView: View {
     @State private var selectedMode: GameMode? = nil
     @State private var showSettings = false
+    @State private var showShareSheet = false
+
+    private static let appStoreURL = URL(string: "https://apps.apple.com/app/id6760817704")!
 
     var body: some View {
         NavigationStack {
@@ -64,7 +68,73 @@ struct StartView: View {
                         // 特殊駒説明
                         SpecialDiscLegend()
                             .padding(.horizontal, 24)
-                            .padding(.bottom, 48)
+
+                        // 評価・紹介ボタン
+                        VStack(spacing: 10) {
+                            Button {
+                                if let scene = UIApplication.shared.connectedScenes
+                                    .compactMap({ $0 as? UIWindowScene })
+                                    .first {
+                                    SKStoreReviewController.requestReview(in: scene)
+                                }
+                            } label: {
+                                HStack(spacing: 10) {
+                                    Image(systemName: "star.fill")
+                                        .font(.system(size: 16, weight: .semibold))
+                                        .foregroundColor(AppTheme.amber)
+                                    Text("App Storeで評価する")
+                                        .font(.system(size: 15, weight: .bold, design: .rounded))
+                                        .foregroundColor(AppTheme.textDark)
+                                    Spacer()
+                                    Image(systemName: "chevron.right")
+                                        .font(.system(size: 12, weight: .bold))
+                                        .foregroundColor(AppTheme.textMid)
+                                }
+                                .padding(.horizontal, 16)
+                                .padding(.vertical, 14)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 14)
+                                        .fill(AppTheme.card)
+                                        .shadow(color: .black.opacity(0.06), radius: 5, y: 2)
+                                )
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 14)
+                                        .stroke(AppTheme.cardBorder, lineWidth: 1.5)
+                                )
+                            }
+                            .buttonStyle(ScaleButtonStyle())
+
+                            Button {
+                                showShareSheet = true
+                            } label: {
+                                HStack(spacing: 10) {
+                                    Image(systemName: "square.and.arrow.up")
+                                        .font(.system(size: 16, weight: .semibold))
+                                        .foregroundColor(AppTheme.boardGreen)
+                                    Text("友達に紹介する")
+                                        .font(.system(size: 15, weight: .bold, design: .rounded))
+                                        .foregroundColor(AppTheme.textDark)
+                                    Spacer()
+                                    Image(systemName: "chevron.right")
+                                        .font(.system(size: 12, weight: .bold))
+                                        .foregroundColor(AppTheme.textMid)
+                                }
+                                .padding(.horizontal, 16)
+                                .padding(.vertical, 14)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 14)
+                                        .fill(AppTheme.card)
+                                        .shadow(color: .black.opacity(0.06), radius: 5, y: 2)
+                                )
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 14)
+                                        .stroke(AppTheme.cardBorder, lineWidth: 1.5)
+                                )
+                            }
+                            .buttonStyle(ScaleButtonStyle())
+                        }
+                        .padding(.horizontal, 24)
+                        .padding(.bottom, 48)
                     }
                 }
 
@@ -100,6 +170,12 @@ struct StartView: View {
             }
             .sheet(isPresented: $showSettings) {
                 SettingsSheet()
+            }
+            .sheet(isPresented: $showShareSheet) {
+                ActivityView(activityItems: [
+                    "バター猫オセロで遊ぼう！🐱🧈",
+                    Self.appStoreURL
+                ] as [Any])
             }
         }
     }
@@ -293,3 +369,14 @@ struct ScaleButtonStyle: ButtonStyle {
 }
 
 extension GameMode: Hashable {}
+
+// MARK: - Activity view (share sheet)
+private struct ActivityView: UIViewControllerRepresentable {
+    let activityItems: [Any]
+
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+    }
+
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
+}
