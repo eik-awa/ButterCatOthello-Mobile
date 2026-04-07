@@ -30,6 +30,7 @@
 		BC0000000000000000000054 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BC0000000000000000000024 /* Assets.xcassets */; };
 		BC0000000000000000000055 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0000000000000000000026 /* AppTheme.swift */; };
 		C24F7FDA2F7BF59F00CDD408 /* ExternalPurchaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24F7FD92F7BF59F00CDD408 /* ExternalPurchaseManager.swift */; };
+		C29915CC2F83B1F400EA9F00 /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29915CB2F83B1F400EA9F00 /* TutorialView.swift */; };
 		C2ED028B2F6BEE7400C01286 /* meow.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C2ED02892F6BEE7400C01286 /* meow.mp3 */; };
 		C2ED028C2F6BEE7400C01286 /* theme.wav in Resources */ = {isa = PBXBuildFile; fileRef = C2ED028A2F6BEE7400C01286 /* theme.wav */; };
 		C2ED028E2F6BEF0B00C01286 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2ED028D2F6BEF0B00C01286 /* AudioManager.swift */; };
@@ -64,6 +65,7 @@
 		BC0000000000000000000026 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		C24F7FD82F7BF59200CDD408 /* ButterCatOthello Mobile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "ButterCatOthello Mobile.entitlements"; sourceTree = "<group>"; };
 		C24F7FD92F7BF59F00CDD408 /* ExternalPurchaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalPurchaseManager.swift; sourceTree = "<group>"; };
+		C29915CB2F83B1F400EA9F00 /* TutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
 		C2ED02892F6BEE7400C01286 /* meow.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = meow.mp3; sourceTree = "<group>"; };
 		C2ED028A2F6BEE7400C01286 /* theme.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = theme.wav; sourceTree = "<group>"; };
 		C2ED028D2F6BEF0B00C01286 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
@@ -157,6 +159,7 @@
 				BC0000000000000000000022 /* BottomDiscBar.swift */,
 				BC0000000000000000000023 /* HandDiscView.swift */,
 				C2ED02912F6BF25900C01286 /* BannerAdView.swift */,
+				C29915CB2F83B1F400EA9F00 /* TutorialView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -258,6 +261,7 @@
 				BC000000000000000000004A /* EasyCpuStrategy.swift in Sources */,
 				BC000000000000000000004B /* HardCpuStrategy.swift in Sources */,
 				BC000000000000000000004C /* GameViewModel.swift in Sources */,
+				C29915CC2F83B1F400EA9F00 /* TutorialView.swift in Sources */,
 				BC000000000000000000004D /* StartView.swift in Sources */,
 				BC000000000000000000004E /* GameView.swift in Sources */,
 				BC000000000000000000004F /* BoardView.swift in Sources */,
@@ -297,7 +301,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = eiki.ogawa.ButterCat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -329,7 +333,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = eiki.ogawa.ButterCat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

@@ -5,6 +5,7 @@ struct StartView: View {
     @State private var selectedMode: GameMode? = nil
     @State private var showSettings = false
     @State private var showShareSheet = false
+    @State private var showTutorial = false
 
     private static let appStoreURL = URL(string: "https://apps.apple.com/app/id6760817704")!
 
@@ -62,6 +63,13 @@ struct StartView: View {
                                 icon: "person.2.fill",
                                 color: AppTheme.boardGreen
                             ) { selectedMode = .pvp }
+
+                            ModeButton(
+                                title: "あそびかた",
+                                subtitle: "チュートリアル",
+                                icon: "book.fill",
+                                color: AppTheme.amber
+                            ) { showTutorial = true }
                         }
                         .padding(.horizontal, 24)
 
@@ -170,6 +178,9 @@ struct StartView: View {
             }
             .sheet(isPresented: $showSettings) {
                 SettingsSheet()
+            }
+            .fullScreenCover(isPresented: $showTutorial) {
+                TutorialView()
             }
             .sheet(isPresented: $showShareSheet) {
                 ActivityView(activityItems: [
