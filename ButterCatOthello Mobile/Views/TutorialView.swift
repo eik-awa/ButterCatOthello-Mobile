@@ -184,11 +184,11 @@ private let steps: [TutorialStepData] = [
                     TDisc(col: 0, row: 1, isBlack: false, type: .normal), // 白（相手が(0,2)から挟む用）
                 ],
                 targetCol: 1, targetRow: 0,
-                placeDisc: TDisc(col: 0, row: 0, isBlack: false, type: .normal),
-                flips: [TDisc(col: 1, row: 1, isBlack: false, type: .normal)],
+                placeDisc: TDisc(col: 1, row: 0, isBlack: true, type: .butterCat),
+                flips: [TDisc(col: 1, row: 1, isBlack: true, type: .normal)],
                 targetCol2: nil, targetRow2: nil, placeDisc2: nil, flips2: [],
-                opponentDisc: TDisc(col: 1, row: 0, isBlack: false, type: .butterCat),
-                opponentFlips: [TDisc(col: 1, row: 1, isBlack: true, type: .normal)], // 黒→白に裏返す
+                opponentDisc: TDisc(col: 0, row: 0, isBlack: false, type: .normal),
+                opponentFlips: [TDisc(col: 1, row: 1, isBlack: false, type: .normal)], // 黒→白に裏返す
                 resistCol: nil, resistRow: nil,
                 butterResistCol: nil, butterResistRow: nil,
                 hasFirstMove: false
@@ -873,11 +873,15 @@ private struct TutorialMiniBoard: View {
         var result = config.initialDiscs
 
         // 1手目（以降ずっと有効）
-        if config.hasFirstMove &&
-           (phase == .firstPlaced ||
-            phase == .opponentAnimating ||
-            phase == .opponentMoved ||
-            phase == .secondPlaced) {
+        if (config.hasFirstMove &&
+            (phase == .firstPlaced ||
+             phase == .opponentAnimating ||
+             phase == .opponentMoved ||
+             phase == .secondPlaced))
+            ||
+           (!config.hasFirstMove &&
+            (phase == .firstPlaced ||
+             phase == .secondPlaced)) {
 
             result.append(config.placeDisc)
 
