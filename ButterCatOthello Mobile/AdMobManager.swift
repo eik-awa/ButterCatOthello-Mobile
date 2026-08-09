@@ -9,6 +9,9 @@ final class AdMobManager: NSObject, ObservableObject {
     static let bannerAdUnitID = "ca-app-pub-1615601076718034/9813212424"
     static let interstitialAdUnitID = "ca-app-pub-1615601076718034/4560885746"
 
+    // 一時的に無効化（再有効化するには true に戻す）
+    static let interstitialEnabled = false
+
     // MARK: - Interstitial
     @Published private(set) var interstitialAd: InterstitialAd?
 
@@ -26,6 +29,7 @@ final class AdMobManager: NSObject, ObservableObject {
 
     /// インタースティシャル広告を読み込み
     func loadInterstitial() {
+        guard Self.interstitialEnabled else { return }
         InterstitialAd.load(
             with: Self.interstitialAdUnitID,
             request: Request()
@@ -42,17 +46,16 @@ final class AdMobManager: NSObject, ObservableObject {
 
     /// インタースティシャル広告を表示（表示後に自動リロード）
     func showInterstitial() {
+        guard Self.interstitialEnabled else { return }
         guard let ad = interstitialAd,
               let root = UIApplication.shared
                 .connectedScenes
                 .compactMap({ $0 as? UIWindowScene })
                 .first?.windows.first?.rootViewController else {
-            // 広告が無い場合はリロードだけ
             loadInterstitial()
             return
         }
         ad.present(from: root)
-        // 表示後にリセット＆次のロード
         interstitialAd = nil
         loadInterstitial()
     }

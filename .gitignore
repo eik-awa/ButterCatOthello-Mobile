@@ -1,0 +1,6 @@
+# デバイスID設定（git管理外）
+**/debug-config.js
+
+# macOS
+.DS_Store
+**/.DS_Store

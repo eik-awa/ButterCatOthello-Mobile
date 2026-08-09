@@ -42,10 +42,12 @@ struct GameView: View {
                 // プレイヤー手札バー（下部固定）
                 BottomDiscBar(viewModel: viewModel)
 
-                // バナー広告
-                BannerAdView(adUnitID: AdMobManager.bannerAdUnitID)
-                    .frame(height: 50)
-                    .background(AppTheme.card)
+                // バナー広告（デバッグ端末では非表示）
+                if !DebugDeviceConfig.isDebugDevice {
+                    BannerAdView(adUnitID: AdMobManager.bannerAdUnitID)
+                        .frame(height: 50)
+                        .background(AppTheme.card)
+                }
             }
 
             // パス通知トースト

@@ -133,7 +133,8 @@ private let steps: [TutorialStepData] = [
             .selectDisc,
             .message("角に置いてみるにゃ！"),
             .boardAction2,
-            .message("これがバター駒の使い方にゃ！"),
+            .message("バター駒は相手の色で置かれるから\n本来入れない場所にも潜り込めるにゃ！"),
+            .message("そこから角を狙えるのが\nバター駒の強さにゃ！"),
         ],
         board: BoardSetup(
             initialDiscs: [
@@ -173,8 +174,8 @@ private let steps: [TutorialStepData] = [
             .selectDisc,
             .message("光ってるマスに置いて防ぐにゃ！"),
             .boardAction,
-            .message("これで拡大を止められたにゃ！"),
-            .message("バター猫は壁として使うにゃ！"),
+            .message("バター猫は色がないから\n絶対に裏返されないにゃ！"),
+            .message("相手の連続裏返しも遮断するにゃ！\n鉄壁の壁として使えるにゃ！"),
         ],
         board: BoardSetup(
             initialDiscs: [
@@ -185,7 +186,7 @@ private let steps: [TutorialStepData] = [
                 ],
                 targetCol: 1, targetRow: 0,
                 placeDisc: TDisc(col: 1, row: 0, isBlack: true, type: .butterCat),
-                flips: [TDisc(col: 1, row: 1, isBlack: true, type: .normal)],
+                flips: [], // バター猫は駒を裏返さない
                 targetCol2: nil, targetRow2: nil, placeDisc2: nil, flips2: [],
                 opponentDisc: TDisc(col: 0, row: 0, isBlack: false, type: .normal),
                 opponentFlips: [TDisc(col: 1, row: 1, isBlack: false, type: .normal)], // 黒→白に裏返す
@@ -285,8 +286,10 @@ struct TutorialView: View {
 
     private var boardPhase: BoardPhase {
         if hasPlaced2 { return .secondPlaced }
+        // hasFirstMove:false の場合、相手の後にプレイヤーが置く → .secondPlaced を流用して両方表示
+        if hasOpponentMoved && !currentStep.board.hasFirstMove && hasPlaced { return .secondPlaced }
         if hasOpponentMoved { return .opponentMoved }
-        if isOpponentAnimating { return .opponentAnimating}
+        if isOpponentAnimating { return .opponentAnimating }
         if hasPlaced { return .firstPlaced }
         return .initial
     }
@@ -340,6 +343,13 @@ struct TutorialView: View {
                 }
 
                 tutorialBottomBar
+            }
+
+            // 画面タップで次へ（インタラクティブな操作が不要なときだけ有効）
+            if canAdvance {
+                Color.clear
+                    .contentShape(Rectangle())
+                    .onTapGesture { advance() }
             }
         }
     }
@@ -451,6 +461,7 @@ struct TutorialView: View {
     }
 
     private func placeDisc() {
+        isAdvancing = true
         withAnimation(.spring(response: 0.35, dampingFraction: 0.6)) {
             hasPlaced = true
         }
@@ -463,6 +474,7 @@ struct TutorialView: View {
     }
 
     private func placeDisc2() {
+        isAdvancing = true
         withAnimation(.spring(response: 0.35, dampingFraction: 0.6)) {
             hasPlaced2 = true
         }
@@ -475,16 +487,15 @@ struct TutorialView: View {
     }
 
     private func triggerOpponentMove() {
-        isOpponentAnimating = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-            withAnimation(.spring(response: 0.35, dampingFraction: 0.6)) {
-                hasOpponentMoved = true
-            }
-            isOpponentAnimating = false
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-                withAnimation(.spring(duration: 0.35)) {
-                    visibleBeatCount += 1
-                }
+        // 相手駒配置と裏返しを同時にアニメーション（1拍の間を省く）
+        isAdvancing = true
+        withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
+            hasOpponentMoved = true
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
+            isAdvancing = false
+            withAnimation(.spring(duration: 0.35)) {
+                visibleBeatCount += 1
             }
         }
     }
@@ -630,12 +641,12 @@ struct TutorialView: View {
                         .padding(.horizontal, 20)
                         .background(
                             LinearGradient(
-                                colors: [AppTheme.boardGreen, AppTheme.boardGreenDark],
+                                colors: [AppTheme.amber, Color(red: 1.0, green: 0.55, blue: 0.0)],
                                 startPoint: .topLeading, endPoint: .bottomTrailing
                             )
                         )
                         .cornerRadius(12)
-                        .shadow(color: AppTheme.boardGreen.opacity(0.3), radius: 6, y: 3)
+                        .shadow(color: AppTheme.amberShadow, radius: 6, y: 3)
                     }
                     .buttonStyle(ScaleButtonStyle())
                 } else {
@@ -872,16 +883,12 @@ private struct TutorialMiniBoard: View {
     private var currentDiscs: [TDisc] {
         var result = config.initialDiscs
 
-        // 1手目（以降ずっと有効）
-        if (config.hasFirstMove &&
+        // 1手目（hasFirstMove:true の場合のみ、以降ずっと有効）
+        if config.hasFirstMove &&
             (phase == .firstPlaced ||
              phase == .opponentAnimating ||
              phase == .opponentMoved ||
-             phase == .secondPlaced))
-            ||
-           (!config.hasFirstMove &&
-            (phase == .firstPlaced ||
-             phase == .secondPlaced)) {
+             phase == .secondPlaced) {
 
             result.append(config.placeDisc)
 
@@ -908,7 +915,17 @@ private struct TutorialMiniBoard: View {
             }
         }
 
-        // 自分の2手目
+        // hasFirstMove:false の自分の手（相手の後に置く）
+        if !config.hasFirstMove && phase == .secondPlaced {
+            result.append(config.placeDisc)
+
+            for flip in config.flips {
+                result.removeAll { $0.col == flip.col && $0.row == flip.row }
+                result.append(flip)
+            }
+        }
+
+        // 自分の2手目（hasFirstMove:true 専用）
         if phase == .secondPlaced,
            let pd2 = config.placeDisc2 {
 
